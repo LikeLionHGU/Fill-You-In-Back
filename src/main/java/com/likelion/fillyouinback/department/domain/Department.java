@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 
 @Entity
 public class Department extends BaseTime {
-    @Id
-    @Column(name = "department_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long departmentId;
+  @Id
+  @Column(name = "department_id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long departmentId;
 
-    @Column(name = "name", length = 60, nullable = false)
-    private String name;
+  @Column(name = "name", length = 60, nullable = false)
+  private String name;
 }
