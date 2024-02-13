@@ -39,6 +39,8 @@ dependencies {
 	implementation 'com.google.api-client:google-api-client:1.30.10'
 
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

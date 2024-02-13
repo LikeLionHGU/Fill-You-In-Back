@@ -3,15 +3,16 @@ package com.likelion.fillyouinback.member.domain;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.likelion.fillyouinback.base.domain.BaseTime;
 import com.likelion.fillyouinback.member.domain.enums.MemberAuthority;
+import com.likelion.fillyouinback.member.dto.MemberDto;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member extends BaseTime {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,7 @@ public class Member extends BaseTime {
   private String lastName;
 
   @Column(name = "semester")
-  private int semester;
+  private Integer semester;
 
   @Column(name = "department", length = 60)
   private String department;
@@ -58,6 +59,9 @@ public class Member extends BaseTime {
   @Column(name = "skills", columnDefinition = "TEXT")
   private String skills;
 
+  @Column(name = "introduction", columnDefinition = "TEXT")
+  private String introduction;
+
   public static Member from(GoogleIdToken.Payload payload) {
     return Member.builder()
         .email(payload.getEmail())
@@ -66,5 +70,17 @@ public class Member extends BaseTime {
         .lastName((String) payload.get("family_name"))
         .googleProfilePictureUrl((String) payload.get("picture"))
         .build();
+  }
+
+  public void update(MemberDto dto) {
+    this.semester = dto.getSemester() != null ? dto.getSemester() : this.semester;
+    this.department = dto.getDepartment() != null ? dto.getDepartment() : this.department;
+    this.affiliation = dto.getAffiliation() != null ? dto.getAffiliation() : this.affiliation;
+    this.fields = dto.getFields() != null ? String.join(",", dto.getFields()) : this.fields;
+    this.jobs = dto.getJobs() != null ? String.join(",", dto.getJobs()) : this.jobs;
+    this.skills = dto.getSkills() != null ? String.join(",", dto.getSkills()) : this.skills;
+    this.introduction = dto.getIntroduction() != null ? dto.getIntroduction() : this.introduction;
+    this.bannerImage = dto.getBannerImage() != null ? dto.getBannerImage() : this.bannerImage;
+    this.profileImage = dto.getProfileImage() != null ? dto.getProfileImage() : this.profileImage;
   }
 }

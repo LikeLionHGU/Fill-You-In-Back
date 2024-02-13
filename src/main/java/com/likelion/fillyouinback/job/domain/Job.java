@@ -2,8 +2,10 @@ package com.likelion.fillyouinback.job.domain;
 
 import com.likelion.fillyouinback.base.domain.BaseTime;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Job extends BaseTime {
   @Id
   @Column(name = "job_id")
