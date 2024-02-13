@@ -21,6 +21,7 @@ public class MyProfileResponse {
   private List<String> fields;
   private List<String> jobs;
   private List<String> skills;
+  private String introduction;
 
   public static MyProfileResponse from(MemberDto dto) {
     return MyProfileResponse.builder()
@@ -36,6 +37,7 @@ public class MyProfileResponse {
         .fields(dto.getFields())
         .jobs(dto.getJobs())
         .skills(dto.getSkills())
+        .introduction(dto.getIntroduction())
         .build();
   }
 }
