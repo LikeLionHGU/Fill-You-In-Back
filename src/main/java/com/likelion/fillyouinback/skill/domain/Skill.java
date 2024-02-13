@@ -1,16 +1,17 @@
-package com.likelion.fillyouinback.field.domain;
+package com.likelion.fillyouinback.skill.domain;
 
 import com.likelion.fillyouinback.base.domain.BaseTime;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-public class Field extends BaseTime {
+public class Skill extends BaseTime {
   @Id
-  @Column(name = "field_id")
+  @Column(name = "skill_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long fieldId;
+  private Long skillId;
 
   @Column(name = "name", length = 60, nullable = false)
   private String name;

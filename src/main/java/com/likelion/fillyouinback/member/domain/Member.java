@@ -4,14 +4,14 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.likelion.fillyouinback.base.domain.BaseTime;
 import com.likelion.fillyouinback.member.domain.enums.MemberAuthority;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member extends BaseTime {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
