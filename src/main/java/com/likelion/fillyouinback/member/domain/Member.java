@@ -32,7 +32,7 @@ public class Member extends BaseTime {
   private String lastName;
 
   @Column(name = "semester")
-  private int semester;
+  private Integer semester;
 
   @Column(name = "department", length = 60)
   private String department;
