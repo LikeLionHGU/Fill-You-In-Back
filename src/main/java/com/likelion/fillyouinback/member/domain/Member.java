@@ -80,5 +80,7 @@ public class Member extends BaseTime {
     this.jobs = dto.getJobs() != null ? String.join(",", dto.getJobs()) : this.jobs;
     this.skills = dto.getSkills() != null ? String.join(",", dto.getSkills()) : this.skills;
     this.introduction = dto.getIntroduction() != null ? dto.getIntroduction() : this.introduction;
+    this.bannerImage = dto.getBannerImage() != null ? dto.getBannerImage() : this.bannerImage;
+    this.profileImage = dto.getProfileImage() != null ? dto.getProfileImage() : this.profileImage;
   }
 }

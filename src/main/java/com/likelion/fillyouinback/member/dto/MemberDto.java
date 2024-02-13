@@ -4,11 +4,13 @@ import com.likelion.fillyouinback.member.controller.request.UpdateMyProfileReque
 import com.likelion.fillyouinback.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Builder
+@Setter
 public class MemberDto {
   private String email;
   private String authority;

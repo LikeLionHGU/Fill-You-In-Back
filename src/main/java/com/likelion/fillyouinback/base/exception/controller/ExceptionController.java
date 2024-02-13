@@ -1,4 +1,4 @@
-package com.likelion.fillyouinback.base.controller;
+package com.likelion.fillyouinback.base.exception.controller;
 
 import com.likelion.fillyouinback.base.exception.NotFoundException;
 import com.likelion.fillyouinback.base.response.ExceptionResponse;

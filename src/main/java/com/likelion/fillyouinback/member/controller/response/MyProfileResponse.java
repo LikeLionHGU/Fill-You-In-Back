@@ -3,11 +3,13 @@ package com.likelion.fillyouinback.member.controller.response;
 import com.likelion.fillyouinback.member.dto.MemberDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Builder
+@Setter
 public class MyProfileResponse {
   private String email;
   private String firstName;
@@ -16,8 +18,8 @@ public class MyProfileResponse {
   private String department;
   private String affiliation;
   private String googleProfilePictureUrl;
-  private String profileImage;
-  private String bannerImage;
+  private String profileImageUrl;
+  private String bannerImageUrl;
   private List<String> fields;
   private List<String> jobs;
   private List<String> skills;
@@ -32,8 +34,6 @@ public class MyProfileResponse {
         .department(dto.getDepartment())
         .affiliation(dto.getAffiliation())
         .googleProfilePictureUrl(dto.getGoogleProfilePictureUrl())
-        .profileImage(dto.getProfileImage())
-        .bannerImage(dto.getBannerImage())
         .fields(dto.getFields())
         .jobs(dto.getJobs())
         .skills(dto.getSkills())
