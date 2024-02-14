@@ -1,14 +1,13 @@
 package com.likelion.fillyouinback.auth.service;
 
 import com.likelion.fillyouinback.auth.dto.AuthDto;
+import com.likelion.fillyouinback.auth.exception.FailedToGoogleLoginException;
 import com.likelion.fillyouinback.auth.util.JwtUtil;
 import com.likelion.fillyouinback.member.domain.Member;
 import com.likelion.fillyouinback.member.domain.enums.MemberAuthority;
 import com.likelion.fillyouinback.member.repository.MemberRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,9 +36,6 @@ public class AuthService {
 
   public AuthDto loginOAuthGoogle(AuthDto dto) {
     Member member = verifyIDToken(dto.getGoogleIdToken());
-    if (member == null) {
-      throw new IllegalArgumentException();
-    }
     member = createOrUpdateUser(member);
     return AuthDto.builder()
         .jwt(JwtUtil.createToken(member.getId(), SECRET_KEY, EXPIRE_TIME_MS))
@@ -63,11 +59,11 @@ public class AuthService {
     try {
       GoogleIdToken idTokenObj = verifier.verify(idToken);
       if (idTokenObj == null) {
-        return null;
+        throw new FailedToGoogleLoginException();
       }
       return Member.from(idTokenObj.getPayload());
-    } catch (GeneralSecurityException | IOException e) {
-      return null;
+    } catch (Exception e) {
+      throw new FailedToGoogleLoginException();
     }
   }
 }
