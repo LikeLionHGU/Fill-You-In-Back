@@ -1,6 +1,8 @@
 package com.likelion.fillyouinback.auth.util;
 
+import com.likelion.fillyouinback.auth.exception.WrongTokenException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
@@ -26,15 +28,12 @@ public class JwtUtil {
     return extractClaims(token, secretKey).get("memberId", Long.class);
   }
 
-  // 밝급된 Token이 만료 시간이 지났는지 체크
-  public static boolean isExpired(String token, String secretKey) {
-    Date expiredDate = extractClaims(token, secretKey).getExpiration();
-    // Token의 만료 날짜가 지금보다 이전인지 check
-    return expiredDate.before(new Date());
-  }
-
   // SecretKey를 사용해 Token Decoding
   private static Claims extractClaims(String token, String secretKey) {
-    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    try {
+      return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    } catch (ExpiredJwtException e) {
+      throw new WrongTokenException("만료된 토큰입니다.");
+    }
   }
 }

@@ -28,4 +28,12 @@ public class MemberService {
             .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
     member.update(dto);
   }
+
+  public void updateMemberProfileImage(Long memberId, MemberDto memberDto) {
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
+    member.setProfileImage(memberDto.getProfileImage());
+  }
 }

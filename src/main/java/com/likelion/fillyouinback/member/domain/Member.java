@@ -70,13 +70,13 @@ public class Member extends BaseTime {
   }
 
   public void update(MemberDto dto) {
-    this.semester = dto.getSemester() != null ? dto.getSemester() : this.semester;
-    this.department = dto.getDepartment() != null ? dto.getDepartment() : this.department;
-    this.affiliations = dto.getAffiliations() != null ? String.join(",", dto.getAffiliations()) : this.affiliations;
-    this.fields = dto.getFields() != null ? String.join(",", dto.getFields()) : this.fields;
-    this.jobs = dto.getJobs() != null ? String.join(",", dto.getJobs()) : this.jobs;
-    this.skills = dto.getSkills() != null ? String.join(",", dto.getSkills()) : this.skills;
-    this.introduction = dto.getIntroduction() != null ? dto.getIntroduction() : this.introduction;
-    this.profileImage = dto.getProfileImage() != null ? dto.getProfileImage() : this.profileImage;
+    this.semester = dto.getSemester();
+    this.department = dto.getDepartment();
+    this.affiliations = String.join(",", dto.getAffiliations());
+    this.fields = String.join(",", dto.getFields());
+    this.jobs = String.join(",", dto.getJobs());
+    this.skills = String.join(",", dto.getSkills());
+    this.introduction = dto.getIntroduction();
+    this.profileImage = dto.getProfileImage();
   }
 }
