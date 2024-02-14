@@ -18,10 +18,9 @@ public class MemberDto {
   private String lastName;
   private Integer semester;
   private String department;
-  private String affiliation;
+  private List<String> affiliations;
   private String googleProfilePictureUrl;
   private String profileImage;
-  private String bannerImage;
   private List<String> fields;
   private List<String> jobs;
   private List<String> skills;
@@ -35,10 +34,9 @@ public class MemberDto {
         .lastName(member.getLastName())
         .semester(member.getSemester())
         .department(member.getDepartment())
-        .affiliation(member.getAffiliation())
+        .affiliations(splitString(member.getAffiliations()))
         .googleProfilePictureUrl(member.getGoogleProfilePictureUrl())
         .profileImage(member.getProfileImage())
-        .bannerImage(member.getBannerImage())
         .fields(splitString(member.getFields()))
         .jobs(splitString(member.getJobs()))
         .skills(splitString(member.getSkills()))
@@ -50,7 +48,7 @@ public class MemberDto {
     return MemberDto.builder()
         .semester(request.getSemester())
         .department(request.getDepartment())
-        .affiliation(request.getAffiliation())
+        .affiliations(request.getAffiliations())
         .fields(request.getFields())
         .jobs(request.getJobs())
         .skills(request.getSkills())

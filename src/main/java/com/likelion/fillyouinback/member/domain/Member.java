@@ -38,17 +38,14 @@ public class Member extends BaseTime {
   @Column(name = "department", length = 60)
   private String department;
 
-  @Column(name = "affiliation", columnDefinition = "TEXT")
-  private String affiliation;
-
   @Column(name = "google_profile_picture_url", length = 100, nullable = false)
   private String googleProfilePictureUrl;
 
   @Column(name = "profile_image", length = 500)
   private String profileImage;
 
-  @Column(name = "banner_image", length = 500)
-  private String bannerImage;
+  @Column(name = "affiliations", columnDefinition = "TEXT")
+  private String affiliations;
 
   @Column(name = "fields", columnDefinition = "TEXT")
   private String fields;
@@ -75,12 +72,11 @@ public class Member extends BaseTime {
   public void update(MemberDto dto) {
     this.semester = dto.getSemester() != null ? dto.getSemester() : this.semester;
     this.department = dto.getDepartment() != null ? dto.getDepartment() : this.department;
-    this.affiliation = dto.getAffiliation() != null ? dto.getAffiliation() : this.affiliation;
+    this.affiliations = dto.getAffiliations() != null ? String.join(",", dto.getAffiliations()) : this.affiliations;
     this.fields = dto.getFields() != null ? String.join(",", dto.getFields()) : this.fields;
     this.jobs = dto.getJobs() != null ? String.join(",", dto.getJobs()) : this.jobs;
     this.skills = dto.getSkills() != null ? String.join(",", dto.getSkills()) : this.skills;
     this.introduction = dto.getIntroduction() != null ? dto.getIntroduction() : this.introduction;
-    this.bannerImage = dto.getBannerImage() != null ? dto.getBannerImage() : this.bannerImage;
     this.profileImage = dto.getProfileImage() != null ? dto.getProfileImage() : this.profileImage;
   }
 }
