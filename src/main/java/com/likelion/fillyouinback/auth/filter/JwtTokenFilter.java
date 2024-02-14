@@ -49,9 +49,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     // 전송받은 값에서 'Bearer ' 뒷부분(Jwt Token) 추출
     String token = authorizationHeader.split(" ")[1];
 
-    // 전송받은 Jwt Token이 만료됨
-    if (JwtUtil.isExpired(token, SECRET_KEY)) throw new WrongTokenException("만료된 토큰입니다.");
-
     Member loginMember = authService.getLoginMember(JwtUtil.getMemberId(token, SECRET_KEY));
 
     // loginUser 정보로 UsernamePasswordAuthenticationToken 발급
