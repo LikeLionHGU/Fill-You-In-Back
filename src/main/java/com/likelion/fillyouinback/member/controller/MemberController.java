@@ -25,8 +25,6 @@ public class MemberController {
   private final S3Service s3Service;
   private static final String PROFILE_IMAGE_DIR = "profile";
 
-  private static final String BANNER_IMAGE_DIR = "banner";
-
   @GetMapping("/api/fillyouin/my-profile")
   public ResponseEntity<MyProfileResponse> getMemberProfile(
       @RequestHeader("Authorization") String bearerToken) {
@@ -56,7 +54,7 @@ public class MemberController {
     String fileName = s3Service.upload(image, PROFILE_IMAGE_DIR);
     MemberDto memberDto = MemberDto.builder().profileImage(fileName).build();
     memberDto.setProfileImage(fileName);
-    memberService.updateMember(JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY), memberDto);
+    memberService.updateMemberProfileImage(JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY), memberDto);
   }
 
   private static String getToken(String bearerToken) {
