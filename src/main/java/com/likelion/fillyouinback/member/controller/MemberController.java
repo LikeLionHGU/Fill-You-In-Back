@@ -37,8 +37,6 @@ public class MemberController {
                 memberDto);
     response.setProfileImageUrl(
         s3Service.getImageUrl(PROFILE_IMAGE_DIR, memberDto.getProfileImage()));
-    response.setBannerImageUrl(
-        s3Service.getImageUrl(BANNER_IMAGE_DIR, memberDto.getBannerImage()));
     return ResponseEntity.ok(response);
   }
 
@@ -58,17 +56,6 @@ public class MemberController {
     String fileName = s3Service.upload(image, PROFILE_IMAGE_DIR);
     MemberDto memberDto = MemberDto.builder().profileImage(fileName).build();
     memberDto.setProfileImage(fileName);
-    memberService.updateMember(JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY), memberDto);
-  }
-
-  @PostMapping("/api/fillyouin/my-profile/banner-image")
-  public void uploadBannerImage(
-      @RequestHeader("Authorization") String bearerToken,
-      @RequestParam("image") MultipartFile image)
-      throws S3ImageUploadException {
-    String fileName = s3Service.upload(image, BANNER_IMAGE_DIR);
-    MemberDto memberDto = MemberDto.builder().bannerImage(fileName).build();
-    memberDto.setBannerImage(fileName);
     memberService.updateMember(JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY), memberDto);
   }
 

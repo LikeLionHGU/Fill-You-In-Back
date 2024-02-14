@@ -16,10 +16,9 @@ public class MyProfileResponse {
   private String lastName;
   private Integer semester;
   private String department;
-  private String affiliation;
+  private List<String> affiliations;
   private String googleProfilePictureUrl;
   private String profileImageUrl;
-  private String bannerImageUrl;
   private List<String> fields;
   private List<String> jobs;
   private List<String> skills;
@@ -32,7 +31,7 @@ public class MyProfileResponse {
         .lastName(dto.getLastName())
         .semester(dto.getSemester())
         .department(dto.getDepartment())
-        .affiliation(dto.getAffiliation())
+        .affiliations(dto.getAffiliations())
         .googleProfilePictureUrl(dto.getGoogleProfilePictureUrl())
         .fields(dto.getFields())
         .jobs(dto.getJobs())
