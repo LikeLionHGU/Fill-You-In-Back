@@ -2,6 +2,9 @@ package com.likelion.fillyouinback.member.dto;
 
 import com.likelion.fillyouinback.member.controller.request.UpdateMyProfileRequest;
 import com.likelion.fillyouinback.member.domain.Member;
+import com.likelion.fillyouinback.memberField.dto.MemberFieldDto;
+import com.likelion.fillyouinback.memberJob.dto.MemberJobDto;
+import com.likelion.fillyouinback.memberSkill.dto.MemberSkillDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,10 +24,11 @@ public class MemberDto {
   private List<String> affiliations;
   private String googleProfilePictureUrl;
   private String profileImage;
-  private List<String> fields;
-  private List<String> jobs;
-  private List<String> skills;
+  private List<MemberFieldDto> fields;
+  private List<MemberJobDto> jobs;
+  private List<MemberSkillDto> skills;
   private String introduction;
+  private Boolean isFirstProfileVisit;
 
   public static MemberDto from(Member member) {
     return MemberDto.builder()
@@ -37,10 +41,11 @@ public class MemberDto {
         .affiliations(splitString(member.getAffiliations()))
         .googleProfilePictureUrl(member.getGoogleProfilePictureUrl())
         .profileImage(member.getProfileImage())
-        .fields(splitString(member.getFields()))
-        .jobs(splitString(member.getJobs()))
-        .skills(splitString(member.getSkills()))
+        .fields(member.getFields().stream().map(MemberFieldDto::from).toList())
+        .jobs(member.getJobs().stream().map(MemberJobDto::from).toList())
+        .skills(member.getSkills().stream().map(MemberSkillDto::from).toList())
         .introduction(member.getIntroduction())
+        .isFirstProfileVisit(member.getIsFirstProfileVisit())
         .build();
   }
 
@@ -49,12 +54,13 @@ public class MemberDto {
         .semester(request.getSemester())
         .department(request.getDepartment())
         .affiliations(request.getAffiliations())
-        .fields(request.getFields())
-        .jobs(request.getJobs())
-        .skills(request.getSkills())
+        .fields(MemberFieldDto.listFrom(request))
+        .jobs(MemberJobDto.listFrom(request))
+        .skills(MemberSkillDto.listFrom(request))
         .introduction(request.getIntroduction())
         .build();
   }
+
   private static List<String> splitString(String str) {
     return str == null ? null : List.of(str.split(","));
   }

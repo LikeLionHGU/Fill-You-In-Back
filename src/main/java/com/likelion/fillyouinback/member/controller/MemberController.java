@@ -28,13 +28,15 @@ public class MemberController {
   @GetMapping("/api/fillyouin/my-profile")
   public ResponseEntity<MyProfileResponse> getMemberProfile(
       @RequestHeader("Authorization") String bearerToken) {
+    Long memberId = JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY);
     MemberDto memberDto =
-        memberService.getMember(JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY));
+        memberService.getMember(memberId);
     MyProfileResponse response =
         MyProfileResponse.from(
                 memberDto);
     response.setProfileImageUrl(
         s3Service.getImageUrl(PROFILE_IMAGE_DIR, memberDto.getProfileImage()));
+    memberService.updateIsFirstProfileVisit(memberId, false);
     return ResponseEntity.ok(response);
   }
 
