@@ -11,8 +11,29 @@ public class UpdateMyProfileRequest {
     private Integer semester;
     private String department;
     private List<String> affiliations;
-    private List<String> fields;
-    private List<String> jobs;
-    private List<String> skills;
+    private List<Field> fields;
+    private List<Job> jobs;
+    private List<Skill> skills;
     private String introduction;
+
+    @Getter
+    @NoArgsConstructor
+    public static class Field {
+        private String name;
+        private Boolean isPinned;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class Job {
+        private String name;
+        private Boolean isPinned;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class Skill {
+        private String name;
+        private Boolean isPinned;
+    }
 }

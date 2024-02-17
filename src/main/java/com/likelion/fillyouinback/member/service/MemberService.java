@@ -36,4 +36,12 @@ public class MemberService {
             .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
     member.setProfileImage(memberDto.getProfileImage());
   }
+
+  public void updateIsFirstProfileVisit(Long memberId, Boolean isFirstProfileVisit) {
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
+    member.setIsFirstProfileVisit(isFirstProfileVisit);
+  }
 }

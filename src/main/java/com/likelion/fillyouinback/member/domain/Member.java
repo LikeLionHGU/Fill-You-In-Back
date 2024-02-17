@@ -4,8 +4,13 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.likelion.fillyouinback.base.domain.BaseTime;
 import com.likelion.fillyouinback.member.domain.enums.MemberAuthority;
 import com.likelion.fillyouinback.member.dto.MemberDto;
+import com.likelion.fillyouinback.memberField.domain.MemberField;
+import com.likelion.fillyouinback.memberJob.domain.MemberJob;
+import com.likelion.fillyouinback.memberSkill.domain.MemberSkill;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,7 +43,7 @@ public class Member extends BaseTime {
   @Column(name = "department", length = 60)
   private String department;
 
-  @Column(name = "google_profile_picture_url", length = 100, nullable = false)
+  @Column(name = "google_profile_picture_url", length = 1000, nullable = false)
   private String googleProfilePictureUrl;
 
   @Column(name = "profile_image", length = 500)
@@ -47,17 +52,32 @@ public class Member extends BaseTime {
   @Column(name = "affiliations", columnDefinition = "TEXT")
   private String affiliations;
 
-  @Column(name = "fields", columnDefinition = "TEXT")
-  private String fields;
-
-  @Column(name = "jobs", columnDefinition = "TEXT")
-  private String jobs;
-
-  @Column(name = "skills", columnDefinition = "TEXT")
-  private String skills;
-
   @Column(name = "introduction", columnDefinition = "TEXT")
   private String introduction;
+
+  @OneToMany(
+      mappedBy = "member",
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true)
+  private List<MemberSkill> skills;
+
+  @OneToMany(
+      mappedBy = "member",
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true)
+  private List<MemberField> fields;
+
+  @OneToMany(
+      mappedBy = "member",
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL,
+      orphanRemoval = true)
+  private List<MemberJob> jobs;
+
+  @Column(name = "is_first_profile_visit", nullable = false)
+  private Boolean isFirstProfileVisit;
 
   public static Member from(GoogleIdToken.Payload payload) {
     return Member.builder()
@@ -66,6 +86,7 @@ public class Member extends BaseTime {
         .firstName((String) payload.get("given_name"))
         .lastName((String) payload.get("family_name"))
         .googleProfilePictureUrl((String) payload.get("picture"))
+        .isFirstProfileVisit(true)
         .build();
   }
 
@@ -73,10 +94,13 @@ public class Member extends BaseTime {
     this.semester = dto.getSemester();
     this.department = dto.getDepartment();
     this.affiliations = String.join(",", dto.getAffiliations());
-    this.fields = String.join(",", dto.getFields());
-    this.jobs = String.join(",", dto.getJobs());
-    this.skills = String.join(",", dto.getSkills());
     this.introduction = dto.getIntroduction();
     this.profileImage = dto.getProfileImage();
+    this.skills.clear();
+    this.skills.addAll(MemberSkill.listFrom(dto.getSkills(), this));
+    this.fields.clear();
+    this.fields.addAll(MemberField.listFrom(dto.getFields(), this));
+    this.jobs.clear();
+    this.jobs.addAll(MemberJob.listFrom(dto.getJobs(), this));
   }
 }
