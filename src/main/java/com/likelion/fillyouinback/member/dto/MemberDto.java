@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 @Setter
 public class MemberDto {
+  private Long id;
   private String email;
   private String authority;
   private String firstName;
@@ -24,6 +25,7 @@ public class MemberDto {
   private List<String> affiliations;
   private String googleProfilePictureUrl;
   private String profileImage;
+  private String profileImageUrl;
   private List<MemberFieldDto> fields;
   private List<MemberJobDto> jobs;
   private List<MemberSkillDto> skills;
@@ -32,6 +34,7 @@ public class MemberDto {
 
   public static MemberDto from(Member member) {
     return MemberDto.builder()
+        .id(member.getId())
         .email(member.getEmail())
         .authority(member.getAuthority().getKorean())
         .firstName(member.getFirstName())

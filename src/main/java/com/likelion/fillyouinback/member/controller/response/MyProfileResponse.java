@@ -6,13 +6,11 @@ import com.likelion.fillyouinback.memberJob.dto.MemberJobDto;
 import com.likelion.fillyouinback.memberSkill.dto.MemberSkillDto;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Builder
-@Setter
 public class MyProfileResponse {
   private String email;
   private String firstName;
@@ -68,6 +66,7 @@ public class MyProfileResponse {
         .semester(dto.getSemester())
         .department(dto.getDepartment())
         .affiliations(dto.getAffiliations())
+        .profileImageUrl(dto.getProfileImageUrl())
         .fields(dto.getFields().stream().map(Field::from).toList())
         .jobs(dto.getJobs().stream().map(Job::from).toList())
         .skills(dto.getSkills().stream().map(Skill::from).toList())
