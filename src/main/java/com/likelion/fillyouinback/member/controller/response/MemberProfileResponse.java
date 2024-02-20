@@ -11,7 +11,8 @@ import java.util.List;
 
 @Getter
 @Builder
-public class MyProfileResponse {
+public class MemberProfileResponse {
+  private Long id;
   private String email;
   private String firstName;
   private String lastName;
@@ -19,11 +20,11 @@ public class MyProfileResponse {
   private String department;
   private List<Affiliation> affiliations;
   private String profileImageUrl;
-  private List<Field> fields;
-  private List<Job> jobs;
-  private List<Skill> skills;
   private String introduction;
-  private Boolean isFirstProfileVisit;
+  private Boolean isScrapped;
+  private List<Skill> skills;
+  private List<Job> jobs;
+  private List<Field> fields;
 
   @Getter
   @Builder
@@ -37,12 +38,11 @@ public class MyProfileResponse {
 
   @Getter
   @Builder
-  private static class Field {
+  private static class Skill {
     private String name;
-    private Boolean isPinned;
 
-    private static Field from(MemberFieldDto field) {
-      return Field.builder().name(field.getName()).isPinned(field.getIsPinned()).build();
+    private static Skill from(MemberSkillDto skill) {
+      return Skill.builder().name(skill.getName()).build();
     }
   }
 
@@ -50,26 +50,25 @@ public class MyProfileResponse {
   @Builder
   private static class Job {
     private String name;
-    private Boolean isPinned;
 
     private static Job from(MemberJobDto job) {
-      return Job.builder().name(job.getName()).isPinned(job.getIsPinned()).build();
+      return Job.builder().name(job.getName()).build();
     }
   }
 
   @Getter
   @Builder
-  private static class Skill {
+  private static class Field {
     private String name;
-    private Boolean isPinned;
 
-    private static Skill from(MemberSkillDto skill) {
-      return Skill.builder().name(skill.getName()).isPinned(skill.getIsPinned()).build();
+    private static Field from(MemberFieldDto field) {
+      return Field.builder().name(field.getName()).build();
     }
   }
 
-  public static MyProfileResponse from(MemberDto dto) {
-    return MyProfileResponse.builder()
+  public static MemberProfileResponse from(MemberDto dto) {
+    return MemberProfileResponse.builder()
+        .id(dto.getId())
         .email(dto.getEmail())
         .firstName(dto.getFirstName())
         .lastName(dto.getLastName())
@@ -77,11 +76,11 @@ public class MyProfileResponse {
         .department(dto.getDepartment())
         .affiliations(dto.getAffiliations().stream().map(Affiliation::from).toList())
         .profileImageUrl(dto.getProfileImageUrl())
-        .fields(dto.getFields().stream().map(Field::from).toList())
-        .jobs(dto.getJobs().stream().map(Job::from).toList())
-        .skills(dto.getSkills().stream().map(Skill::from).toList())
         .introduction(dto.getIntroduction())
-        .isFirstProfileVisit(dto.getIsFirstProfileVisit())
+        .isScrapped(dto.getIsScrapped())
+        .skills(dto.getSkills().stream().map(Skill::from).toList())
+        .jobs(dto.getJobs().stream().map(Job::from).toList())
+        .fields(dto.getFields().stream().map(Field::from).toList())
         .build();
   }
 }

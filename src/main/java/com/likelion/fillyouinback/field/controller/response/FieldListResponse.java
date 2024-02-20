@@ -19,7 +19,7 @@ public class FieldListResponse {
   private static class Field {
     private String name;
 
-    public static Field from(FieldDto dto) {
+    private static Field from(FieldDto dto) {
       return Field.builder().name(dto.getName()).build();
     }
   }

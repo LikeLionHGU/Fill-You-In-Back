@@ -18,7 +18,7 @@ public class JobListResponse {
   private static class Job {
     private String name;
 
-    public static Job from(JobDto dto) {
+    private static Job from(JobDto dto) {
       return Job.builder().name(dto.getName()).build();
     }
   }

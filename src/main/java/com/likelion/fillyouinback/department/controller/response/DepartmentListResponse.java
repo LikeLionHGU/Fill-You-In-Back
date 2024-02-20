@@ -19,7 +19,7 @@ public class DepartmentListResponse {
   private static class Department {
     private String name;
 
-    public static Department from(DepartmentDto dto) {
+    private static Department from(DepartmentDto dto) {
       return Department.builder().name(dto.getName()).build();
     }
   }
