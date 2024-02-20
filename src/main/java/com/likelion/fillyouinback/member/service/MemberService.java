@@ -95,4 +95,11 @@ public class MemberService {
         .map(member -> MemberDto.from(member, scrapMembers))
         .toList();
   }
+
+  public List<MemberDto> getScrapMembers(Long memberId) {
+    List<ScrapMember> scrapMembers = scrapMemberRepository.findAllByMemberId(memberId);
+    return scrapMembers.stream()
+        .map(scrapMember -> MemberDto.from(scrapMember.getScrapMember(), scrapMembers))
+        .toList();
+  }
 }

@@ -4,6 +4,7 @@ import com.likelion.fillyouinback.auth.util.JwtUtil;
 import com.likelion.fillyouinback.member.controller.request.UpdateMyProfileRequest;
 import com.likelion.fillyouinback.member.controller.response.FilteredProfileCardListResponse;
 import com.likelion.fillyouinback.member.controller.response.MyProfileResponse;
+import com.likelion.fillyouinback.member.controller.response.ScrapProfileCardListResponse;
 import com.likelion.fillyouinback.member.dto.MemberDto;
 import com.likelion.fillyouinback.s3.exception.S3ImageUploadException;
 import com.likelion.fillyouinback.s3.service.S3Service;
@@ -63,6 +64,18 @@ public class MemberController {
             skill,
             job,
             field));
+  }
+
+  @GetMapping("/api/fillyouin/members/scrap-profile-card")
+  public ResponseEntity<ScrapProfileCardListResponse> getScrapProfileCard(
+      @RequestHeader("Authorization") String bearerToken) {
+    Long memberId = JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY);
+    List<MemberDto> memberDtos = memberService.getScrapMembers(memberId);
+    memberDtos.forEach(
+        memberDto ->
+            memberDto.setProfileImageUrl(
+                s3Service.getImageUrl(PROFILE_IMAGE_DIR, memberDto.getProfileImage())));
+    return ResponseEntity.ok(ScrapProfileCardListResponse.from(memberDtos));
   }
 
   @PutMapping("/api/fillyouin/my-profile")
