@@ -18,7 +18,7 @@ public class AffiliationListResponse {
   private static class Affiliation {
     private String name;
 
-    public static Affiliation from(AffiliationDto dto) {
+    private static Affiliation from(AffiliationDto dto) {
       return Affiliation.builder().name(dto.getName()).build();
     }
   }

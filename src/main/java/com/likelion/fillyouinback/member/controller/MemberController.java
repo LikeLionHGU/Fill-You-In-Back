@@ -3,6 +3,7 @@ package com.likelion.fillyouinback.member.controller;
 import com.likelion.fillyouinback.auth.util.JwtUtil;
 import com.likelion.fillyouinback.member.controller.request.UpdateMyProfileRequest;
 import com.likelion.fillyouinback.member.controller.response.FilteredProfileCardListResponse;
+import com.likelion.fillyouinback.member.controller.response.MemberProfileResponse;
 import com.likelion.fillyouinback.member.controller.response.MyProfileResponse;
 import com.likelion.fillyouinback.member.controller.response.ScrapProfileCardListResponse;
 import com.likelion.fillyouinback.member.dto.MemberDto;
@@ -76,6 +77,15 @@ public class MemberController {
             memberDto.setProfileImageUrl(
                 s3Service.getImageUrl(PROFILE_IMAGE_DIR, memberDto.getProfileImage())));
     return ResponseEntity.ok(ScrapProfileCardListResponse.from(memberDtos));
+  }
+
+  @GetMapping("/api/fillyouin/members/{memberId}/profile")
+  public ResponseEntity<MemberProfileResponse> getMemberProfile(
+      @PathVariable Long memberId, @RequestHeader("Authorization") String bearerToken) {
+    MemberDto memberDto = memberService.getMember(JwtUtil.getMemberId(getToken(bearerToken),SECRET_KEY),memberId);
+    memberDto.setProfileImageUrl(
+        s3Service.getImageUrl(PROFILE_IMAGE_DIR, memberDto.getProfileImage()));
+    return ResponseEntity.ok(MemberProfileResponse.from(memberDto));
   }
 
   @PutMapping("/api/fillyouin/my-profile")

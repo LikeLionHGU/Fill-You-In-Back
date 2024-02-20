@@ -28,6 +28,15 @@ public class MemberService {
             .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다.")));
   }
 
+  public MemberDto getMember(Long myId, Long memberId) {
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다."));
+    List<ScrapMember> scrapMembers = scrapMemberRepository.findAllByMemberId(myId);
+    return MemberDto.from(member, scrapMembers);
+  }
+
   public void updateMember(Long memberId, MemberDto dto) {
     Member member =
         memberRepository

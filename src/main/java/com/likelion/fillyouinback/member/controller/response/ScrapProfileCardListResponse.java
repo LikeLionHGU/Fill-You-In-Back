@@ -34,7 +34,7 @@ public class ScrapProfileCardListResponse {
     private String field;
     private Boolean isScrapped;
 
-    public static ProfileCard from(MemberDto dto) {
+    private static ProfileCard from(MemberDto dto) {
       ProfileCard profileCard =
           ProfileCard.builder()
               .id(dto.getId())

@@ -38,7 +38,7 @@ public class FilteredProfileCardListResponse {
     private String field;
     private Boolean isScrapped;
 
-    public static ProfileCard from(
+    private static ProfileCard from(
         MemberDto dto, String skillFilter, String jobFilter, String fieldFilter) {
       ProfileCard profileCard =
           ProfileCard.builder()
