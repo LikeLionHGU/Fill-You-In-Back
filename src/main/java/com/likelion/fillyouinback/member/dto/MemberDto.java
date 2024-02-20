@@ -5,6 +5,7 @@ import com.likelion.fillyouinback.member.domain.Member;
 import com.likelion.fillyouinback.memberField.dto.MemberFieldDto;
 import com.likelion.fillyouinback.memberJob.dto.MemberJobDto;
 import com.likelion.fillyouinback.memberSkill.dto.MemberSkillDto;
+import com.likelion.fillyouinback.scrapMember.domain.ScrapMember;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class MemberDto {
   private List<MemberSkillDto> skills;
   private String introduction;
   private Boolean isFirstProfileVisit;
+  private Boolean isScrapped;
 
   public static MemberDto from(Member member) {
     return MemberDto.builder()
@@ -62,6 +64,12 @@ public class MemberDto {
         .skills(MemberSkillDto.listFrom(request))
         .introduction(request.getIntroduction())
         .build();
+  }
+
+  public static MemberDto from(Member member, List<ScrapMember> scrapMembers){
+    MemberDto memberDto = from(member);
+    memberDto.setIsScrapped(scrapMembers.stream().anyMatch(scrapMember -> scrapMember.getScrapMember().getId().equals(member.getId())));
+    return memberDto;
   }
 
   private static List<String> splitString(String str) {

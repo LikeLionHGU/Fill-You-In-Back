@@ -4,6 +4,8 @@ import com.likelion.fillyouinback.base.exception.NotFoundException;
 import com.likelion.fillyouinback.member.domain.Member;
 import com.likelion.fillyouinback.member.dto.MemberDto;
 import com.likelion.fillyouinback.member.filter.MemberSpecification;
+import com.likelion.fillyouinback.scrapMember.domain.ScrapMember;
+import com.likelion.fillyouinback.scrapMember.repository.ScrapMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
   private final MemberRepository memberRepository;
+  private final ScrapMemberRepository scrapMemberRepository;
 
   public MemberDto getMember(Long memberId) {
     return MemberDto.from(
@@ -86,6 +89,10 @@ public class MemberService {
 
     spec = spec.and(MemberSpecification.notMe(memberId));
 
-    return memberRepository.findAll(spec).stream().map(MemberDto::from).toList();
+    List<ScrapMember> scrapMembers = scrapMemberRepository.findAllByMemberId(memberId);
+
+    return memberRepository.findAll(spec).stream()
+        .map(member -> MemberDto.from(member, scrapMembers))
+        .toList();
   }
 }
