@@ -10,11 +10,18 @@ import java.util.List;
 public class UpdateMyProfileRequest {
     private Integer semester;
     private String department;
-    private List<String> affiliations;
+    private List<Affiliation> affiliations;
     private List<Field> fields;
     private List<Job> jobs;
     private List<Skill> skills;
     private String introduction;
+
+    @Getter
+    @NoArgsConstructor
+    public static class Affiliation{
+        private String name;
+        private Boolean isPinned;
+    }
 
     @Getter
     @NoArgsConstructor

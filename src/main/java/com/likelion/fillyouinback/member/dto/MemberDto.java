@@ -58,7 +58,7 @@ public class MemberDto {
     return MemberDto.builder()
         .semester(request.getSemester())
         .department(request.getDepartment())
-        .affiliations(request.getAffiliations())
+        .affiliations(request.getAffiliations().stream().map(UpdateMyProfileRequest.Affiliation::getName).toList())
         .fields(MemberFieldDto.listFrom(request))
         .jobs(MemberJobDto.listFrom(request))
         .skills(MemberSkillDto.listFrom(request))
