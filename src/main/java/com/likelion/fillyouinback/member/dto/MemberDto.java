@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -73,6 +74,6 @@ public class MemberDto {
   }
 
   private static List<String> splitString(String str) {
-    return str == null ? null : List.of(str.split(","));
+    return str == null ? new ArrayList<>() : List.of(str.split(","));
   }
 }
