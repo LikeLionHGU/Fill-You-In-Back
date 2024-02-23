@@ -58,13 +58,7 @@ public class MemberController {
         memberDto ->
             memberDto.setProfileImageUrl(
                 s3Service.getImageUrl(PROFILE_IMAGE_DIR, memberDto.getProfileImage())));
-    return ResponseEntity.ok(
-        FilteredProfileCardListResponse.from(
-            memberService.getFilteredMembers(
-                memberId, name, department, semester, skill, job, field),
-            skill,
-            job,
-            field));
+    return ResponseEntity.ok(FilteredProfileCardListResponse.from(memberDtos, skill, job, field));
   }
 
   @GetMapping("/api/fillyouin/members/scrap-profile-card")
@@ -82,7 +76,8 @@ public class MemberController {
   @GetMapping("/api/fillyouin/members/{memberId}/profile")
   public ResponseEntity<MemberProfileResponse> getMemberProfile(
       @PathVariable Long memberId, @RequestHeader("Authorization") String bearerToken) {
-    MemberDto memberDto = memberService.getMember(JwtUtil.getMemberId(getToken(bearerToken),SECRET_KEY),memberId);
+    MemberDto memberDto =
+        memberService.getMember(JwtUtil.getMemberId(getToken(bearerToken), SECRET_KEY), memberId);
     memberDto.setProfileImageUrl(
         s3Service.getImageUrl(PROFILE_IMAGE_DIR, memberDto.getProfileImage()));
     return ResponseEntity.ok(MemberProfileResponse.from(memberDto));
