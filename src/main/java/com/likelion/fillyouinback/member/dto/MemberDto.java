@@ -74,6 +74,7 @@ public class MemberDto {
   }
 
   private static List<String> splitString(String str) {
-    return str == null ? new ArrayList<>() : List.of(str.split(","));
+    return str == null || str.isBlank() ? new ArrayList<>() : List.of(str.split(","));
   }
+  //todo: 추후에 코드 고치기
 }
