@@ -95,7 +95,6 @@ public class Member extends BaseTime {
     this.department = dto.getDepartment();
     this.affiliations = String.join(",", dto.getAffiliations());
     this.introduction = dto.getIntroduction();
-    this.profileImage = dto.getProfileImage();
     this.skills.clear();
     this.skills.addAll(MemberSkill.listFrom(dto.getSkills(), this));
     this.fields.clear();
