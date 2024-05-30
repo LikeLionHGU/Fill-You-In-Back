@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -23,5 +26,11 @@ public class CategoryService {
                 .findById(dto.getMemberId())
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다.")),
             dto));
+  }
+
+  public List<CategoryDto> getCategoryList(Long memberId) {
+    return categoryRepository.findByMemberId(memberId).stream()
+        .map(CategoryDto::from)
+        .collect(Collectors.toList());
   }
 }
