@@ -1,0 +1,27 @@
+package com.likelion.fillyouinback.category.service;
+
+import com.likelion.fillyouinback.base.exception.NotFoundException;
+import com.likelion.fillyouinback.category.domain.Category;
+import com.likelion.fillyouinback.category.dto.CategoryDto;
+import com.likelion.fillyouinback.category.repository.CategoryRepository;
+import com.likelion.fillyouinback.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class CategoryService {
+  private final CategoryRepository categoryRepository;
+  private final MemberRepository memberRepository;
+
+  public void addCategory(CategoryDto dto) {
+    categoryRepository.save(
+        Category.from(
+            memberRepository
+                .findById(dto.getMemberId())
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 회원입니다.")),
+            dto));
+  }
+}
