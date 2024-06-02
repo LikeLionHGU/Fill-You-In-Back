@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -23,5 +25,11 @@ public class FolderService {
             categoryRepository
                 .findById(dto.getCategoryDto().getId())
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 카테고리입니다."))));
+  }
+
+  public List<FolderDto> getFolderList(Long categoryId) {
+    return folderRepository.findByCategoryId(categoryId).stream()
+        .map(FolderDto::from)
+        .toList();
   }
 }
