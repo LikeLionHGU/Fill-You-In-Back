@@ -1,4 +1,4 @@
-package com.likelion.fillyouinback.folder.controller;
+package com.likelion.fillyouinback.folder.controller.response;
 
 import com.likelion.fillyouinback.folder.dto.FolderDto;
 import lombok.Builder;

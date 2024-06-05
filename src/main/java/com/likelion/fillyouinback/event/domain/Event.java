@@ -1,8 +1,8 @@
 package com.likelion.fillyouinback.event.domain;
 
 import com.likelion.fillyouinback.base.domain.BaseTime;
-import com.likelion.fillyouinback.category.domain.Category;
 import com.likelion.fillyouinback.event.dto.EventDto;
+import com.likelion.fillyouinback.folder.domain.Folder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,17 +33,21 @@ public class Event extends BaseTime {
   @Column(name = "main_text", columnDefinition = "TEXT")
   private String mainText;
 
-  @ManyToOne
-  @JoinColumn(name = "category_id")
-  private Category category;
+  @Column(name = "image_url", length = 300)
+  private String imageUrl;
 
-  public static Event from(Category category, EventDto dto) {
+  @ManyToOne
+  @JoinColumn(name = "folder_id")
+  private Folder folder;
+
+  public static Event from(Folder folder, EventDto dto) {
     return Event.builder()
-        .category(category)
+        .folder(folder)
         .title(dto.getTitle())
         .startDate(dto.getStartDate())
         .endDate(dto.getEndDate())
         .mainText(dto.getMainText())
+        .imageUrl(dto.getImageUrl())
         .build();
   }
 }

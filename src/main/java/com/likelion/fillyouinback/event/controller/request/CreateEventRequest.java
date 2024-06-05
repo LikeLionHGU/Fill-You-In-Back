@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 public class CreateEventRequest {
-    private Long categoryId;
-
-    private Long id;
+    private Long folderId;
 
     private String title;
 

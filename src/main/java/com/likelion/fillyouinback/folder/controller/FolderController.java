@@ -1,6 +1,7 @@
 package com.likelion.fillyouinback.folder.controller;
 
 import com.likelion.fillyouinback.folder.controller.request.AddFolderRequest;
+import com.likelion.fillyouinback.folder.controller.response.FolderListResponse;
 import com.likelion.fillyouinback.folder.dto.FolderDto;
 import com.likelion.fillyouinback.folder.service.FolderService;
 import lombok.RequiredArgsConstructor;

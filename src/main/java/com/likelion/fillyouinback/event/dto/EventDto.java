@@ -1,7 +1,8 @@
 package com.likelion.fillyouinback.event.dto;
 
-import com.likelion.fillyouinback.category.dto.CategoryDto;
 import com.likelion.fillyouinback.event.controller.request.CreateEventRequest;
+import com.likelion.fillyouinback.event.domain.Event;
+import com.likelion.fillyouinback.folder.dto.FolderDto;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,16 +21,31 @@ public class EventDto {
 
   private String mainText;
 
-  private CategoryDto categoryDto;
+  private String imageUrl;
+
+  private FolderDto folderDto;
+
+  private LocalDateTime createdDate;
 
   public static EventDto from(CreateEventRequest request) {
     return EventDto.builder()
-        .id(request.getId())
         .title(request.getTitle())
         .startDate(request.getStartDate())
         .endDate(request.getEndDate())
         .mainText(request.getMainText())
-        .categoryDto(CategoryDto.builder().id(request.getCategoryId()).build())
+        .folderDto(FolderDto.builder().id(request.getFolderId()).build())
+        .build();
+  }
+
+  public static EventDto from(Event event) {
+    return EventDto.builder()
+        .id(event.getId())
+        .title(event.getTitle())
+        .startDate(event.getStartDate())
+        .endDate(event.getEndDate())
+        .mainText(event.getMainText())
+        .imageUrl(event.getImageUrl())
+        .createdDate(event.getCreatedDate())
         .build();
   }
 }
