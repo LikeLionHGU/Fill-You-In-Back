@@ -5,11 +5,11 @@ import com.likelion.fillyouinback.event.dto.EventDto;
 import com.likelion.fillyouinback.event.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class EventController {
   private final EventService eventService;

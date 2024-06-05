@@ -9,7 +9,6 @@ import com.likelion.fillyouinback.s3.exception.S3ImageUploadException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Objects;
@@ -43,6 +42,23 @@ public class S3Service {
       throw new S3ImageUploadException();
     }
     return fileName;
+  }
+
+  public String uploadFile(MultipartFile multipartFile, String dirPath) throws S3ImageUploadException {
+    if (multipartFile == null || multipartFile.isEmpty()) {
+      return null;
+    }
+    validFileSize(multipartFile);
+    String fileName = getUuidFileName(multipartFile.getOriginalFilename());
+    String filePath = dirPath + "/" + fileName;
+    try {
+      amazonS3Client.putObject(
+          new PutObjectRequest(bucket, filePath, multipartFile.getInputStream(), null)
+              .withCannedAcl(CannedAccessControlList.PublicRead));
+    } catch (IOException e) {
+      throw new S3ImageUploadException();
+    }
+    return getImageUrl(dirPath, fileName);
   }
 
   private void validImageType(MultipartFile multipartFile) {
