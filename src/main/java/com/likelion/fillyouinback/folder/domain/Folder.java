@@ -28,4 +28,8 @@ public class Folder extends BaseTime {
   public static Folder from(FolderDto dto, Category category) {
     return Folder.builder().name(dto.getName()).category(category).build();
   }
+
+  public void update(FolderDto dto) {
+    this.name = dto.getName();
+  }
 }

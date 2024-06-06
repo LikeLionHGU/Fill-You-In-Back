@@ -38,6 +38,9 @@ public class FolderService {
     folderRepository.deleteById(id);
   }
 
-  public void updateFolder(FolderDto from) {
+  public void updateFolder(FolderDto dto) {
+    Folder folder =
+        folderRepository.findById(dto.getId()).orElseThrow(() -> new NotFoundException("존재하지 않는 폴더입니다."));
+    folder.update(dto);
   }
 }
