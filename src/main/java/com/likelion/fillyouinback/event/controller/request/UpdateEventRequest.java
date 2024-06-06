@@ -7,9 +7,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
-public class CreateEventRequest {
-    private Long folderId;
-
+public class UpdateEventRequest {
     private String title;
 
     private LocalDate startDate;

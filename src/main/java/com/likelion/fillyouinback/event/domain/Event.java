@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Builder
@@ -25,10 +25,10 @@ public class Event extends BaseTime {
   private String title;
 
   @Column(name = "start_date", nullable = false)
-  private LocalDateTime startDate;
+  private LocalDate startDate;
 
   @Column(name = "end_date", nullable = false)
-  private LocalDateTime endDate;
+  private LocalDate endDate;
 
   @Column(name = "main_text", columnDefinition = "TEXT")
   private String mainText;
@@ -49,5 +49,13 @@ public class Event extends BaseTime {
         .mainText(dto.getMainText())
         .imageUrl(dto.getImageUrl())
         .build();
+  }
+
+  public void update(EventDto dto) {
+    this.title = dto.getTitle();
+    this.startDate = dto.getStartDate();
+    this.endDate = dto.getEndDate();
+    this.mainText = dto.getMainText();
+    this.imageUrl = dto.getImageUrl();
   }
 }

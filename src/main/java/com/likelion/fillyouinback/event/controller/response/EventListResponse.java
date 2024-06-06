@@ -12,7 +12,7 @@ import java.util.List;
 public class EventListResponse {
 
   private static final DateTimeFormatter DATE_TIME_FORMATTER =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+      DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   private List<Event> events;
 

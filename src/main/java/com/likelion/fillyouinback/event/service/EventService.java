@@ -26,4 +26,13 @@ public class EventService {
   public List<EventDto> getEventList(Long folderId) {
     return eventRepository.findAllByFolderId(folderId).stream().map(EventDto::from).toList();
   }
+
+  public EventDto getEvent(Long eventId) {
+    return EventDto.from(eventRepository.findById(eventId).orElseThrow());
+  }
+
+  public void updateEvent(EventDto dto) {
+    Event event = eventRepository.findById(dto.getId()).orElseThrow();
+    event.update(dto);
+  }
 }

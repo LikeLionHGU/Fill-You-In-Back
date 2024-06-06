@@ -16,4 +16,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
   @Modifying
   @Query("DELETE FROM Event e WHERE e.folder.category.id = :categoryId")
   void deleteByCategoryId(Long categoryId);
+
+  @Modifying
+  @Query("DELETE FROM Event e WHERE e.folder.id = :id")
+  void deleteByFolderId(Long id);
 }

@@ -1,11 +1,13 @@
 package com.likelion.fillyouinback.event.dto;
 
 import com.likelion.fillyouinback.event.controller.request.CreateEventRequest;
+import com.likelion.fillyouinback.event.controller.request.UpdateEventRequest;
 import com.likelion.fillyouinback.event.domain.Event;
 import com.likelion.fillyouinback.folder.dto.FolderDto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -15,9 +17,9 @@ public class EventDto {
 
   private String title;
 
-  private LocalDateTime startDate;
+  private LocalDate startDate;
 
-  private LocalDateTime endDate;
+  private LocalDate endDate;
 
   private String mainText;
 
@@ -46,6 +48,16 @@ public class EventDto {
         .mainText(event.getMainText())
         .imageUrl(event.getImageUrl())
         .createdDate(event.getCreatedDate())
+        .build();
+  }
+
+  public static EventDto from(Long id, UpdateEventRequest request) {
+    return EventDto.builder()
+        .id(id)
+        .title(request.getTitle())
+        .startDate(request.getStartDate())
+        .endDate(request.getEndDate())
+        .mainText(request.getMainText())
         .build();
   }
 }
