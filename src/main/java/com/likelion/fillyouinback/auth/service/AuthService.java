@@ -3,6 +3,8 @@ package com.likelion.fillyouinback.auth.service;
 import com.likelion.fillyouinback.auth.dto.AuthDto;
 import com.likelion.fillyouinback.auth.exception.FailedToGoogleLoginException;
 import com.likelion.fillyouinback.auth.util.JwtUtil;
+import com.likelion.fillyouinback.category.domain.Category;
+import com.likelion.fillyouinback.category.repository.CategoryRepository;
 import com.likelion.fillyouinback.member.domain.Member;
 import com.likelion.fillyouinback.member.domain.enums.MemberAuthority;
 import com.likelion.fillyouinback.member.repository.MemberRepository;
@@ -21,6 +23,8 @@ public class AuthService {
   private final MemberRepository memberRepository;
 
   private final GoogleIdTokenVerifier verifier;
+
+  private final CategoryRepository categoryRepository;
 
   @Value("${custom.jwt.secret}")
   private String SECRET_KEY;
@@ -47,6 +51,10 @@ public class AuthService {
     if (existingMember == null) {
       member.setAuthority(MemberAuthority.USER);
       memberRepository.save(member);
+      categoryRepository.save(Category.from(member, "1학년"));
+      categoryRepository.save(Category.from(member, "2학년"));
+      categoryRepository.save(Category.from(member, "3학년"));
+      categoryRepository.save(Category.from(member, "4학년"));
       return member;
     }
     existingMember.setFirstName(member.getFirstName());

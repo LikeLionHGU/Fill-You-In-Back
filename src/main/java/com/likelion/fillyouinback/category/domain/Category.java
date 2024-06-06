@@ -33,4 +33,8 @@ public class Category extends BaseTime {
   public void update(CategoryDto from) {
     this.name = from.getName();
   }
+
+  public static Category from(Member member, String name) {
+    return Category.builder().member(member).name(name).build();
+  }
 }
