@@ -15,21 +15,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category extends BaseTime {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "name", length = 60, nullable = false)
-    private String name;
+  @ManyToOne
+  @JoinColumn(name = "member_id")
+  private Member member;
 
+  @Column(name = "name", length = 60, nullable = false)
+  private String name;
 
-    public static Category from(Member member, CategoryDto dto) {
-        return Category.builder()
-            .member(member)
-            .name(dto.getName())
-            .build();
-    }
+  public static Category from(Member member, CategoryDto dto) {
+    return Category.builder().member(member).name(dto.getName()).build();
+  }
+
+  public void update(CategoryDto from) {
+    this.name = from.getName();
+  }
 }

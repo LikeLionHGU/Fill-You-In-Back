@@ -1,6 +1,7 @@
 package com.likelion.fillyouinback.category.dto;
 
 import com.likelion.fillyouinback.category.controller.request.AddCategoryRequest;
+import com.likelion.fillyouinback.category.controller.request.UpdateCategoryRequest;
 import com.likelion.fillyouinback.category.domain.Category;
 import com.likelion.fillyouinback.folder.dto.FolderDto;
 import lombok.Builder;
@@ -21,9 +22,10 @@ public class CategoryDto {
   }
 
   public static CategoryDto from(Category category) {
-    return CategoryDto.builder()
-        .id(category.getId())
-        .name(category.getName())
-        .build();
+    return CategoryDto.builder().id(category.getId()).name(category.getName()).build();
+  }
+
+  public static CategoryDto from(UpdateCategoryRequest request, Long id) {
+    return CategoryDto.builder().name(request.getName()).id(id).build();
   }
 }
